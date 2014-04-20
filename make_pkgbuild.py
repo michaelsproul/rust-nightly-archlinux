@@ -3,35 +3,27 @@
 import re
 import os
 import sys
+import datetime
 
 from sys import stderr
+from datetime import date
 
-usage = "Usage: make_pkgbuild.py <template> <version file> <rust makfile>"
+usage = "Usage: make_pkgbuild.py <pkgbuild template> <rust makefile>"
 release_number_regex = r"CFG_RELEASE_NUM[ ]*=[ ]*(?P<value>.*)"
 release_label_regex = r"CFG_RELEASE_LABEL[ ]*=[ ]*(?P<value>.*)"
 
-def read_version_file(version_file):
-	if os.path.exists(version_file):
-		with open(version_file, "r") as f:
-			text = f.read()
-		old_version = eval(text)
-		return old_version
-	else:
-		return None
-
-
 def main():
-	if len(sys.argv) != 4:
+	# Parse command-line args
+	if len(sys.argv) != 3:
 		print(usage, file=stderr)
 		sys.exit(1)
 
 	template_file = sys.argv[1]
-	version_file = sys.argv[2]
-	rust_makefile = sys.argv[3]
+	rust_makefile = sys.argv[2]
 
-	# Extract the version information
+	# Extract the version information from the Rust makefile
 	with open(rust_makefile, "r") as f:
-		text = f.readlines()
+		rust_mk_contents = f.readlines()
 
 	r1 = re.compile(release_number_regex)
 	r2 = re.compile(release_label_regex)
@@ -39,7 +31,7 @@ def main():
 	version_number = None
 	version_label = None
 
-	for line in text:
+	for line in rust_mk_contents:
 		if version_number is not None and version_label is not None:
 			break
 
@@ -52,26 +44,15 @@ def main():
 		if m2:
 			version_label = m2.group("value").replace("-", "_")
 
-	version = version_number + version_label + "_nightly"
+	datestring = date.today().strftime("%Y.%m.%d")
 
-	old_version = read_version_file(version_file)
-
-	# Work out the release number
-	if old_version is None or version != old_version["name"]:
-		release_number = 1
-	else:
-		release_number = old_version["release"] + 1
-
-	# Update the version file
-	with open(version_file, "w") as f:
-		output_ver = {"name": version, "release": release_number}
-		f.write(repr(output_ver) + "\n")
+	version = version_number + version_label + "_" + datestring
 
 	# Write the PKGBUILD to stdout
 	with open(template_file, "r") as f:
 		pkgbuild = f.read()
 
-	pkgbuild = pkgbuild.replace("{VERSION}", version).replace("{RELEASE}", str(release_number))
+	pkgbuild = pkgbuild.replace("{VERSION}", version)
 	sys.stdout.write(pkgbuild)
 
 if __name__ == "__main__":
