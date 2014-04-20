@@ -9,11 +9,12 @@ provides='rust'
 conflicts=('rust' 'rust-git' 'rust-nightly')
 depends=('shared-mime-info')
 license=('MIT' 'Apache')
-source=("http://static.rust-lang.org/dist/rust-nightly-${arch}-unknown-linux-gnu.tar.gz")
+source=("http://static.rust-lang.org/dist/rust-nightly-${CARCH}-unknown-linux-gnu.tar.gz")
+sha256sums=('SKIP')
 install=rust.install
 options=(staticlibs !strip)
 
 package() {
-	cd rust-nightly-${arch}-unknown-linux-gnu
+	cd rust-nightly-${CARCH}-unknown-linux-gnu
 	./install.sh --prefix=$pkgdir/usr
 }
