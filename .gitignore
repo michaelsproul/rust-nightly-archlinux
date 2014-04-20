@@ -1,0 +1,14 @@
+# Ignore source files
+*.tar.gz
+*.mk
+
+# Ignore intermediate directories
+pkg/
+src/
+
+# Ignore built PKGBUILDs
+PKGBUILD
+VERSION
+
+# Ignore the built package
+*.tar.xz
