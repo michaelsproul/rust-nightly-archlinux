@@ -8,7 +8,7 @@ upload: package
 	burp rust-nightly-bin-*.tar.gz
 
 package: PKGBUILD
-	makepkg --source
+	mkaurball
 
 PKGBUILD: rust_makefile.mk
 	./make_pkgbuild.py PKGBUILD.template rust_makefile.mk > PKGBUILD
