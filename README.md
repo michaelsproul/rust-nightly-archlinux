@@ -9,10 +9,10 @@ https://aur.archlinux.org/packages/rust-nightly-bin/
 
 Includes the compiler and a MIME type for Rust source code.
 
-# Syntax Highlighting
+## Syntax Highlighting
 
 * [Vim](https://github.com/wting/rust.vim)
-* [Gedit](https://github.com/michaelsproul/gedit-rust-archlinux)
+* [Gedit](https://aur.archlinux.org/packages/gedit-rust/)
 * [Kate](https://aur.archlinux.org/packages/kate-syntax-rust-git/)
 
 If you'd like to make changes, send me a pull request.
