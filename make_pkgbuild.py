@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import argparse
 import re
 import os
 import sys
@@ -8,21 +9,29 @@ import datetime
 from sys import stderr
 from datetime import date
 
-usage = "Usage: make_pkgbuild.py <pkgbuild template> <rust makefile>"
 release_number_regex = r"CFG_RELEASE_NUM[ ]*=[ ]*(?P<value>.*)"
 release_label_regex = r"CFG_RELEASE_LABEL[ ]*=[ ]*(?P<value>.*)"
 
-def main():
-	# Parse command-line args
-	if len(sys.argv) != 3:
-		print(usage, file=stderr)
-		sys.exit(1)
+def build_args():
+    parser = argparse.ArgumentParser(
+	    description='PKGBUILD generator for Rust nightly')
+    parser.add_argument('template',
+			type=str,
+			help='path to PKGBUILD template',
+			metavar='pkgbuild_template',
+			)
+    parser.add_argument('makefile',
+			type=str,
+			help='path to Rust makefile',
+			metavar='rust_makefile',
+			)
+    return parser
 
-	template_file = sys.argv[1]
-	rust_makefile = sys.argv[2]
+def main():
+	args = build_args().parse_args()
 
 	# Extract the version information from the Rust makefile
-	with open(rust_makefile, "r") as f:
+	with open(args.makefile, "r") as f:
 		rust_mk_contents = f.readlines()
 
 	r1 = re.compile(release_number_regex)
@@ -49,7 +58,7 @@ def main():
 	version = version_number + version_label + "_" + datestring
 
 	# Write the PKGBUILD to stdout
-	with open(template_file, "r") as f:
+	with open(args.template, "r") as f:
 		pkgbuild = f.read()
 
 	pkgbuild = pkgbuild.replace("{VERSION}", version)
