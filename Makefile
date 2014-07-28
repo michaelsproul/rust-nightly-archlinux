@@ -22,6 +22,7 @@ clean:
 	rm -rf src pkg
 	rm -f rust-nightly-bin-*.tar.gz
 	rm -f rust-nightly-bin-*.tar.xz
+	rm -f rust.xml
 
 superclean: clean
 	rm -f rust-nightly-*.tar.gz

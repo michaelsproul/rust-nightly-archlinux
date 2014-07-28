@@ -1,6 +1,7 @@
 # Ignore source files
 *.tar.gz
 *.mk
+*.xml
 
 # Ignore intermediate directories
 pkg/
