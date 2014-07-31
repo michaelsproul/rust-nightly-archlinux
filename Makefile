@@ -1,28 +1,57 @@
-RUST_MAKEFILE=https://raw.githubusercontent.com/mozilla/rust/master/mk/main.mk
+rust_makefile=https://raw.githubusercontent.com/mozilla/rust/master/mk/main.mk
+cargo_makefile=https://raw.githubusercontent.com/rust-lang/cargo/master/Makefile.in
 
-.PHONY: default upload package PKGBUILD clean superclean
+default: rust-src-pkg cargo-src-pkg
 
-default: PKGBUILD
+# Upload
+upload: rust-upload cargo-upload
 
-upload: package
-	burp rust-nightly-bin-*.tar.gz
+%-upload: %-src-pkg
+	burp $*-nightly-bin-*.src.tar.gz
 
-package: PKGBUILD
-	mkaurball
+# Binary packages
+bin-pkgs: rust-bin-pkg cargo-bin-pkg
 
-PKGBUILD: rust_makefile.mk
-	./make_pkgbuild.py PKGBUILD.template rust_makefile.mk > PKGBUILD
-	rm rust_makefile.mk
+%-bin-pkg:
+	makepkg -p pkgbuilds/$*.pkgbuild
+	rm -rf pkg src
 
-rust_makefile.mk:
-	curl $(RUST_MAKEFILE) -o rust_makefile.mk
+# Source packages
+source-pkgs: rust-src-pkg cargo-src-pkg
 
+%-src-pkg: pkgbuilds/%.pkgbuild
+	mkaurball -p $< -f
+	@rm -f $*.xml
+
+# PKGBUILDs
+pkgbuilds/%.pkgbuild: resources/%_makefile.mk | pkgbuilds
+	./make_pkgbuild.py templates/$*.pkgbuild $< > $@
+	rm $<
+
+pkgbuilds:
+	mkdir -p $@
+
+# Version Makefiles
+resources/%_makefile.mk: | resources
+	curl $($*_makefile) -o $@
+
+resources:
+	mkdir -p resources
+
+# Cleaning
 clean:
-	rm -f rust_makefile.mk PKGBUILD
-	rm -rf src pkg
-	rm -f rust-nightly-bin-*.tar.gz
-	rm -f rust-nightly-bin-*.tar.xz
+	rm -rf pkg src
+	rm -rf pkgbuilds
+	rm -f resources/*_makefile.mk
 	rm -f rust.xml
+	rm -f *.src.tar.gz
+	rm -f *.pkg.tar.xz
 
-superclean: clean
-	rm -f rust-nightly-*.tar.gz
+super-clean: clean
+	rm -f *.tar.gz
+
+#.PHONY: default upload rust-upload cargo-upload \
+	bin-pkgs rust-bin-pkg cargo-bin-pkg \
+	source-pkgs rust-src-pkg cargo-src-pkg \
+	clean super-clean
+

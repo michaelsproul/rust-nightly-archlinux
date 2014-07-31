@@ -1,0 +1,19 @@
+# Maintainer: Michael Sproul <micsproul@gmail.com>
+pkgname=cargo-nightly-bin
+pkgver={VERSION}
+pkgrel=1
+arch=('i686' 'x86_64')
+pkgdesc="Cargo downloads your Rust project's dependencies and compiles your project."
+url='http://crates.io/'
+provides='cargo'
+conflicts=('cargo-git')
+depends=('rust')
+license=('MIT' 'Apache')
+source=("http://static.rust-lang.org/cargo-dist/cargo-nightly-${CARCH}-unknown-linux-gnu.tar.gz")
+sha256sums=('SKIP')
+options=(staticlibs !strip)
+
+package() {
+	cd cargo-nightly-${CARCH}-unknown-linux-gnu
+	./install.sh --prefix=$pkgdir/usr
+}

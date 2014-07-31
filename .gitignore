@@ -1,15 +1,8 @@
-# Ignore source files
-*.tar.gz
-*.mk
-*.xml
+# "Compiled" pkgbuilds
+pkgbuilds
 
-# Ignore intermediate directories
-pkg/
-src/
+# Version makefiles
+resources/*_makefile.mk
 
-# Ignore built PKGBUILDs
-PKGBUILD
-VERSION
-
-# Ignore the built package
-*.tar.xz
+# Anything tarry
+*.tar.*
