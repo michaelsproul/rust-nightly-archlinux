@@ -12,7 +12,7 @@ upload: rust-upload cargo-upload
 # Binary packages
 bin-pkgs: rust-bin-pkg cargo-bin-pkg
 
-%-bin-pkg:
+%-bin-pkg: pkgbuilds/%.pkgbuild
 	makepkg -p pkgbuilds/$*.pkgbuild
 	rm -rf pkg src
 
