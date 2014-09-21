@@ -10,7 +10,6 @@ from sys import stderr
 from datetime import date
 
 release_number_regex = r"CFG_RELEASE_NUM[ ]*=[ ]*(?P<value>.*)"
-release_label_regex = r"CFG_RELEASE_LABEL[ ]*=[ ]*(?P<value>.*)"
 
 def build_args():
     parser = argparse.ArgumentParser(description='PKGBUILD generator for Rust nightly')
@@ -33,28 +32,19 @@ def main():
     with open(args.makefile, "r") as f:
         rust_mk_contents = f.readlines()
 
-    r1 = re.compile(release_number_regex)
-    r2 = re.compile(release_label_regex)
+    regex = re.compile(release_number_regex)
 
     version_number = None
-    version_label = None
 
     for line in rust_mk_contents:
-        if version_number is not None and version_label is not None:
+        match = regex.match(line)
+        if match:
+            version_number = match.group("value")
             break
-
-        m1 = r1.match(line)
-        if m1:
-            version_number = m1.group("value")
-            continue
-
-        m2 = r2.match(line)
-        if m2:
-            version_label = m2.group("value").replace("-", "_")
 
     datestring = date.today().strftime("%Y.%m.%d")
 
-    version = version_number + version_label + "_" + datestring
+    version = version_number + "_" + datestring
 
     # Write the PKGBUILD to stdout
     with open(args.template, "r") as f:
