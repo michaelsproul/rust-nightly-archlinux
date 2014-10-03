@@ -10,22 +10,22 @@ conflicts=('rust' 'rust-git' 'rust-nightly')
 depends=('shared-mime-info')
 license=('MIT' 'Apache')
 source=("http://static.rust-lang.org/dist/rust-nightly-${CARCH}-unknown-linux-gnu.tar.gz"
-		'https://raw.githubusercontent.com/rust-lang/rust/master/src/etc/gedit/share/mime/packages/rust.xml')
+        'https://raw.githubusercontent.com/rust-lang/rust/master/src/etc/gedit/share/mime/packages/rust.xml')
 sha256sums=('SKIP' 'SKIP')
 install=rust.install
 options=(staticlibs !strip)
 
 package() {
-	# Rust
-	cd rust-nightly-${CARCH}-unknown-linux-gnu
-	./install.sh --prefix=$pkgdir/usr
+    # Rust
+    cd rust-nightly-${CARCH}-unknown-linux-gnu
+    ./install.sh --prefix=$pkgdir/usr
 
     # Docs
     local DOC_DIR=$pkgdir/usr/share/doc/rust
     mkdir -p ${DOC_DIR}
     cp -r doc/* ${DOC_DIR}
 
-	# MIME type association
-	mkdir -p "${pkgdir}/usr/share/mime/packages"
-	install -m 644 "${srcdir}/rust.xml" "${pkgdir}/usr/share/mime/packages/rust.xml"
+    # MIME type association
+    mkdir -p "${pkgdir}/usr/share/mime/packages"
+    install -m 644 "${srcdir}/rust.xml" "${pkgdir}/usr/share/mime/packages/rust.xml"
 }

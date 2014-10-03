@@ -15,6 +15,6 @@ sha256sums=('SKIP')
 options=(staticlibs !strip)
 
 package() {
-	cd cargo-nightly-${CARCH}-unknown-linux-gnu
-	./install.sh --prefix=$pkgdir/usr
+    cd cargo-nightly-${CARCH}-unknown-linux-gnu
+    ./install.sh --prefix=$pkgdir/usr
 }
