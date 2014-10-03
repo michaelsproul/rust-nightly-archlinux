@@ -49,9 +49,3 @@ clean:
 
 super-clean: clean
 	rm -f *.tar.gz
-
-#.PHONY: default upload rust-upload cargo-upload \
-	bin-pkgs rust-bin-pkg cargo-bin-pkg \
-	source-pkgs rust-src-pkg cargo-src-pkg \
-	clean super-clean
-
