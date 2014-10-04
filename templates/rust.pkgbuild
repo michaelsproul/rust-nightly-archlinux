@@ -21,9 +21,14 @@ package() {
     ./install.sh --prefix=$pkgdir/usr
 
     # Docs
+    echo "Copying HTML docs to ${DEST_DIR}"
     local DOC_DIR=$pkgdir/usr/share/doc/rust
     mkdir -p ${DOC_DIR}
     cp -r doc/* ${DOC_DIR}
+
+    echo "Setting permissions on docs."
+    find ${DOC_DIR} -type f -exec chmod 644 {} ';'
+    find ${DOC_DIR} -type d -exec chmod 775 {} ';'
 
     # MIME type association
     mkdir -p "${pkgdir}/usr/share/mime/packages"
