@@ -22,7 +22,7 @@ package() {
 
     # Docs
     echo "Copying HTML docs to ${DEST_DIR}"
-    local DOC_DIR=$pkgdir/usr/share/doc/rust
+    local DOC_DIR=$pkgdir/usr/share/doc/rust/html
     mkdir -p ${DOC_DIR}
     cp -r doc/* ${DOC_DIR}
 
