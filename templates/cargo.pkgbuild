@@ -1,5 +1,6 @@
 # Maintainer: Michael Sproul <micsproul@gmail.com>
 # Uploader: xico
+# Request Changes: https://github.com/michaelsproul/rust-nightly-archlinux
 pkgname=cargo-nightly-bin
 pkgver={VERSION}
 pkgrel=1

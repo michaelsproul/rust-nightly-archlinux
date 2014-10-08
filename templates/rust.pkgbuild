@@ -1,4 +1,5 @@
 # Maintainer: Michael Sproul <micsproul@gmail.com>
+# Request Changes: https://github.com/michaelsproul/rust-nightly-archlinux
 pkgname=rust-nightly-bin
 pkgver={VERSION}
 pkgrel=1
