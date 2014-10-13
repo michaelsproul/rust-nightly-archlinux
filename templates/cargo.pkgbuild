@@ -11,7 +11,7 @@ provides='cargo'
 conflicts=('cargo-git')
 depends=('rust-nightly-bin')
 license=('MIT' 'Apache')
-source=("http://static.rust-lang.org/cargo-dist/cargo-nightly-${CARCH}-unknown-linux-gnu.tar.gz")
+source=("https://static.rust-lang.org/cargo-dist/cargo-nightly-${CARCH}-unknown-linux-gnu.tar.gz")
 sha256sums=('SKIP')
 options=(staticlibs !strip)
 
