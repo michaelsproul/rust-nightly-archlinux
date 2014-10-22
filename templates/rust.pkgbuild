@@ -22,8 +22,8 @@ package() {
     ./install.sh --prefix=$pkgdir/usr
 
     # Docs
-    echo "Copying HTML docs to ${DEST_DIR}"
     local DOC_DIR=$pkgdir/usr/share/doc/rust/html
+    echo "Copying HTML docs to ${DOC_DIR}"
     mkdir -p ${DOC_DIR}
     cp -r doc/* ${DOC_DIR}
 
