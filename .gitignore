@@ -1,8 +1,9 @@
 # "Compiled" pkgbuilds
 pkgbuilds
 
-# Version makefiles
-resources/*_makefile.mk
+# Temporary files
+temp
+rust.xml
 
 # Anything tarry
 *.tar.*

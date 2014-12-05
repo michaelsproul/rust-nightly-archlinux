@@ -24,7 +24,7 @@ source-pkgs: rust-src-pkg cargo-src-pkg
 	@rm -f $*.xml
 
 # PKGBUILDs
-pkgbuilds/%.pkgbuild: resources/%_makefile.mk | pkgbuilds
+pkgbuilds/%.pkgbuild: temp/%_makefile.mk | pkgbuilds
 	./make_pkgbuild.py templates/$*.pkgbuild $< > $@
 	rm $<
 
@@ -32,18 +32,18 @@ pkgbuilds:
 	mkdir -p $@
 
 # Version Makefiles
-resources/%_makefile.mk: | resources
+temp/%_makefile.mk: | temp
 	curl $($*_makefile) -o $@
 
-resources:
-	mkdir -p resources
+temp:
+	mkdir -p $@
 
 # Cleaning
 clean:
 	rm -rf pkg src
 	rm -rf pkgbuilds
-	rm -f resources/*_makefile.mk
-	rm -f rust.xml
+	rm -rf temp
+	rm -rf rust.xml
 	rm -f *.src.tar.gz
 	rm -f *.pkg.tar.xz
 
