@@ -19,10 +19,11 @@ options=(staticlibs !strip)
 
 package() {
     local INSTALL_DIR=/usr/local
+    local MAN_DIR=/usr/local/man
 
     # Rust
     cd rust-nightly-${CARCH}-unknown-linux-gnu
-    ./install.sh --prefix=${pkgdir}${INSTALL_DIR}
+    ./install.sh --prefix=${pkgdir}${INSTALL_DIR} --mandir=${pkgdir}${MAN_DIR}
 
     # Docs
     local DOC_DIR=${pkgdir}${INSTALL_DIR}/share/doc/rust/html
