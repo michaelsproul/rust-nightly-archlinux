@@ -18,4 +18,5 @@ options=(staticlibs !strip)
 package() {
     cd cargo-nightly-${CARCH}-unknown-linux-gnu
     ./install.sh --prefix=$pkgdir/usr
+    rm "$pkgdir/usr/lib/cargo/manifest"
 }
