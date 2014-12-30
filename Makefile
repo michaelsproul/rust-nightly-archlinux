@@ -12,24 +12,21 @@ upload: rust-upload cargo-upload
 # Binary packages
 bin-pkgs: rust-bin-pkg cargo-bin-pkg
 
-%-bin-pkg: pkgbuilds/%.pkgbuild
-	makepkg -p pkgbuilds/$*.pkgbuild
+%-bin-pkg: %.pkgbuild
+	makepkg -p $<
 	rm -rf pkg src
 
 # Source packages
 source-pkgs: rust-src-pkg cargo-src-pkg
 
-%-src-pkg: pkgbuilds/%.pkgbuild
+%-src-pkg: %.pkgbuild
 	mkaurball -p $< -f
 	@rm -f $*.xml
 
 # PKGBUILDs
-pkgbuilds/%.pkgbuild: temp/%_makefile.mk | pkgbuilds
+%.pkgbuild: temp/%_makefile.mk
 	./make_pkgbuild.py templates/$*.pkgbuild $< > $@
 	rm $<
-
-pkgbuilds:
-	mkdir -p $@
 
 # Version Makefiles
 temp/%_makefile.mk: | temp
@@ -41,9 +38,9 @@ temp:
 # Cleaning
 clean:
 	rm -rf pkg src
-	rm -rf pkgbuilds
 	rm -rf temp
 	rm -rf rust.xml
+	rm -f *.pkgbuild
 	rm -f *.src.tar.gz
 	rm -f *.pkg.tar.xz
 
