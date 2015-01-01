@@ -18,6 +18,7 @@ options=(staticlibs !strip)
 package() {
     cd cargo-nightly-${CARCH}-unknown-linux-gnu
     ./install.sh --prefix=$pkgdir/usr
-    # This will need updating imminently.
-    # rm -f "$pkgdir/usr/lib/cargo/cargo-manifest"
+
+    # remove manifest file referencing $pkgdir
+    rm -f "${pkgdir}/usr/lib/rustlib/manifest-cargo"
 }
