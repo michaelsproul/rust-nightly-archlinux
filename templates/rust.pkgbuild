@@ -42,4 +42,7 @@ package() {
     # Dynamic library configuration (no LD_LIBRARY_PATH required).
     mkdir -p "${pkgdir}/etc/ld.so.conf.d"
     install -m 644 "${srcdir}/rust-nightly.conf" "${pkgdir}/etc/ld.so.conf.d/rust-nightly.conf"
+
+    # remove manifest file referencing $pkgdir
+    rm -f "${pkgdir}/usr/local/lib/rustlib/manifest-rustc"
 }
