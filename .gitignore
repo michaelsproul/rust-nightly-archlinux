@@ -1,9 +1,13 @@
 # "Compiled" pkgbuilds
-pkgbuilds
+*.pkgbuild
 
 # Temporary files
 temp
 rust.xml
+
+# Temporary package creation files.
+pkg
+src
 
 # Anything tarry
 *.tar.*
