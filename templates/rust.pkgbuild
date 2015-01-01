@@ -23,7 +23,7 @@ package() {
 
     # Rust
     cd rust-nightly-${CARCH}-unknown-linux-gnu
-    ./install.sh --prefix=${pkgdir}${INSTALL_DIR} --mandir=${pkgdir}${MAN_DIR} --disable-ldconfig
+    ./install.sh --prefix=${pkgdir}${INSTALL_DIR} --mandir=${pkgdir}${MAN_DIR}
 
     # Docs
     local DOC_DIR=${pkgdir}${INSTALL_DIR}/share/doc/rust/html
