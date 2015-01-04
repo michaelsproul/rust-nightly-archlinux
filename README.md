@@ -3,17 +3,18 @@ Rust & Cargo Nightly
 
 PKGBUILD generator for Arch Linux that makes installing the nightly Rust & Cargo builds easy.
 
-This code is run every 24 hours and updates the following AUR packages:
+This code is run every 24 hours (at 02:30 UTC) and updates the following AUR package:
 
-* Rust: https://aur.archlinux.org/packages/rust-nightly-bin/
-* Cargo: https://aur.archlinux.org/packages/cargo-nightly-bin/
+https://aur.archlinux.org/packages/rust-nightly-bin/
 
-The Rust package includes the compiler and a MIME type for Rust source code.
+## Components
 
-## Update Times
+The AUR package includes the following resources:
 
-* Rust: 02:30 UTC
-* Cargo: 16:00 UTC
+* The Rust compiler, `rustc`.
+* Cargo, the Rust package manager.
+* Offline HTML documentation, available [here](file:///usr/local/share/doc/rust/html/index.html)
+* A `.rs` MIME type for Rust source code.
 
 ## Syntax Highlighting
 

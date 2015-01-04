@@ -1,24 +1,19 @@
 rust_makefile=https://raw.githubusercontent.com/mozilla/rust/master/mk/main.mk
-cargo_makefile=https://raw.githubusercontent.com/rust-lang/cargo/master/Makefile.in
 
-default: rust-src-pkg cargo-src-pkg
+default: rust-src-pkg
 
 # Upload
-upload: rust-upload cargo-upload
+upload: rust-upload
 
 %-upload: %-src-pkg
 	burp $*-nightly-bin-*.src.tar.gz
 
 # Binary packages
-bin-pkgs: rust-bin-pkg cargo-bin-pkg
-
 %-bin-pkg: %.pkgbuild
 	makepkg -p $<
 	rm -rf pkg src
 
 # Source packages
-source-pkgs: rust-src-pkg cargo-src-pkg
-
 %-src-pkg: %.pkgbuild
 	mkaurball -p $< -f
 	@rm -f $*.xml
