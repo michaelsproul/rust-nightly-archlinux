@@ -25,11 +25,6 @@ package() {
     cd rust-nightly-${CARCH}-unknown-linux-gnu
     ./install.sh --prefix=${pkgdir}${INSTALL_DIR} --mandir=${pkgdir}${MAN_DIR}
 
-    # Fix doc permissions.
-    local DOC_DIR=${pkgdir}${INSTALL_DIR}/share/doc/rust/html
-    find ${DOC_DIR} -type f -exec chmod 644 {} ';'
-    find ${DOC_DIR} -type d -exec chmod 775 {} ';'
-
     # Establish .rs MIME type association.
     mkdir -p "${pkgdir}/usr/share/mime/packages"
     install -m 644 "${srcdir}/rust.xml" "${pkgdir}/usr/share/mime/packages/rust.xml"
