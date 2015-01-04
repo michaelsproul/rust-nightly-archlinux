@@ -13,7 +13,7 @@ The AUR package includes the following resources:
 
 * The Rust compiler, `rustc`.
 * Cargo, the Rust package manager.
-* Offline HTML documentation, available [here](file:///usr/local/share/doc/rust/html/index.html)
+* Offline HTML documentation, available at `/usr/local/share/doc/rust/html/index.html`
 * A `.rs` MIME type for Rust source code.
 
 ## Syntax Highlighting
