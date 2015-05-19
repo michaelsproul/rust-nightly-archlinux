@@ -12,7 +12,7 @@ depends=('shared-mime-info')
 license=('MIT' 'Apache')
 source=("https://static.rust-lang.org/dist/rust-nightly-${CARCH}-unknown-linux-gnu.tar.gz"
         'rust-nightly.conf')
-sha256sums=('SKIP' 'SKIP' 'SKIP')
+sha256sums=('SKIP' 'SKIP')
 install=rust.install
 options=(staticlibs !strip)
 
