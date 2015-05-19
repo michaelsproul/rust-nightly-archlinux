@@ -1,4 +1,4 @@
-# Maintainer: Michael Sproul
+# MAINTAINER WANTED
 # Source Available: https://github.com/michaelsproul/rust-nightly-archlinux
 pkgname=rust-nightly-bin
 pkgver={VERSION}
@@ -11,7 +11,6 @@ conflicts=('rust' 'rust-git' 'rust-nightly' 'cargo-nightly-bin')
 depends=('shared-mime-info')
 license=('MIT' 'Apache')
 source=("https://static.rust-lang.org/dist/rust-nightly-${CARCH}-unknown-linux-gnu.tar.gz"
-        'https://raw.githubusercontent.com/rust-lang/gedit-config/master/share/mime/packages/rust.xml'
         'rust-nightly.conf')
 sha256sums=('SKIP' 'SKIP' 'SKIP')
 install=rust.install
@@ -25,9 +24,9 @@ package() {
     cd rust-nightly-${CARCH}-unknown-linux-gnu
     ./install.sh --prefix=${pkgdir}${INSTALL_DIR} --mandir=${pkgdir}${MAN_DIR}
 
-    # Establish .rs MIME type association.
-    mkdir -p "${pkgdir}/usr/share/mime/packages"
-    install -m 644 "${srcdir}/rust.xml" "${pkgdir}/usr/share/mime/packages/rust.xml"
+    # FIXME: Establish .rs MIME type association.
+    # mkdir -p "${pkgdir}/usr/share/mime/packages"
+    # install -m 644 "${srcdir}/rust.xml" "${pkgdir}/usr/share/mime/packages/rust.xml"
 
     # Dynamic linker configuration (no LD_LIBRARY_PATH required).
     mkdir -p "${pkgdir}/etc/ld.so.conf.d"
