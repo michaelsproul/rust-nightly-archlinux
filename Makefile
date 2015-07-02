@@ -21,6 +21,9 @@ temp/rust_makefile.mk: | temp
 aur-repo:
 	git clone $(aur_repo) $@
 
+temp:
+	mkdir -p temp
+
 # Cleaning
 clean:
 	rm -rf pkg src
