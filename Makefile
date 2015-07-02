@@ -9,7 +9,7 @@ upload: PKGBUILD | aur-repo
 	cp ../PKGBUILD ../rust-nightly.conf ../rust.install . && \
 	mksrcinfo && \
 	git commit -a -m "Update: $(shell date --utc)" || echo "Nothing to commit, that's fine."
-	cd aur-repo && git push
+	cd aur-repo && git push origin master
 
 PKGBUILD: templates/rust.pkgbuild temp/rust_makefile.mk
 	./make_pkgbuild.py $^ > $@
