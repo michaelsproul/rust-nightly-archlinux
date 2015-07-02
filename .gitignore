@@ -1,5 +1,5 @@
-# "Compiled" pkgbuilds
-*.pkgbuild
+# Compiled pkgbuilds
+PKGBUILD
 
 # Temporary files
 temp
@@ -11,3 +11,6 @@ src
 
 # Anything tarry
 *.tar.*
+
+# The AUR git repo.
+aur-repo

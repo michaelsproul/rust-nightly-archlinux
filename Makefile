@@ -1,41 +1,31 @@
+aur_repo=ssh://aur@aur4.archlinux.org/rust-nightly-bin.git
 rust_makefile=https://raw.githubusercontent.com/mozilla/rust/master/mk/main.mk
 
-default: rust-src-pkg
+default: PKGBUILD
 
-# Upload
-upload: rust-upload
+upload: PKGBUILD | aur-repo
+	cd aur-repo && \
+	git pull && \
+	cp ../PKGBUILD ../rust-nightly.conf ../rust.install . && \
+	mksrcinfo && \
+	git commit -a -m "Update: $(shell date --utc)" || echo "Nothing to commit, that's fine."
+	cd aur-repo && git push
 
-%-upload: %-src-pkg
-	burp $*-nightly-bin-*.src.tar.gz
+PKGBUILD: templates/rust.pkgbuild temp/rust_makefile.mk
+	./make_pkgbuild.py $^ > $@
+	rm temp/rust_makefile.mk # remove makefile so it updates next time.
 
-# Binary packages
-%-bin-pkg: %.pkgbuild
-	makepkg -p $<
-	rm -rf pkg src
+temp/rust_makefile.mk: | temp
+	curl $(rust_makefile) -o $@
 
-# Source packages
-%-src-pkg: %.pkgbuild
-	mkaurball -p $< -f
-	@rm -f $*.xml
-
-# PKGBUILDs
-%.pkgbuild: temp/%_makefile.mk
-	./make_pkgbuild.py templates/$*.pkgbuild $< > $@
-	rm $<
-
-# Version Makefiles
-temp/%_makefile.mk: | temp
-	curl $($*_makefile) -o $@
-
-temp:
-	mkdir -p $@
+aur-repo:
+	git clone $(aur_repo) $@
 
 # Cleaning
 clean:
 	rm -rf pkg src
 	rm -rf temp
-	rm -rf rust.xml
-	rm -f *.pkgbuild
+	rm -f PKGBUILD
 	rm -f *.src.tar.gz
 	rm -f *.pkg.tar.xz
 
