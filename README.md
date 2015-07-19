@@ -1,3 +1,5 @@
+This code used to generate PKGBUILDs for a Rust Nightly package in the AUR, but I've passed maintenance over to someone else and they're no longer using this code. Original README below:
+
 Rust & Cargo Nightly
 ====================
 
